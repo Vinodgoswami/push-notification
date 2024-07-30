@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import logo from './assets/sparky-dash-high-five.gif';
-import { getFirebaseToken, onForegroundMessage } from './firebase';
+import { getFirebaseToken, messaging, onForegroundMessage } from './firebase';
+import { onMessage } from 'firebase/messaging';
 
 export default function App() {
   const [showNotificationBanner, setShowNotificationBanner] = useState(Notification.permission === 'default');
 
   useEffect(() => {
-    onMessage(messaging, ({ title, body }) =>  toast(<ToastifyNotification title={title} body={body} />))
+    onMessage(messaging, ({notification: { title, body }}) =>  toast(<ToastifyNotification title={title} body={body} />))
     // onForegroundMessage()
     //   .then((payload) => {
     //     console.log('Received foreground message: ', payload);
